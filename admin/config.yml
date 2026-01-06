@@ -1,27 +1,50 @@
+# /admin/config.yml
+# Decap CMS (Netlify CMS) config for:
+# - Hosting: Cloudflare Pages
+# - Repo: GitHub (mikenien/SusanLifeShare)
+# - Content: /data/videos.json
+
 backend:
   name: github
-  repo: mikenien/my-links
+  repo: mikenien/SusanLifeShare
   branch: main
 
-media_folder: "uploads"
-public_folder: "/uploads"
+# 建議保留：避免中文/emoji 變亂碼
+locale: zh_Hant
+
+# 你目前沒有做自訂 OAuth gateway，就先用預設即可
+# （若未來你有加 Cloudflare Pages 的 Git Gateway 再補）
+# site_url: https://susanlifeshare.pages.dev
+
+# 媒體（圖片）上傳位置
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+# 你可以用這個做草稿（可不開）
+publish_mode: simple
 
 collections:
-  - name: "data"
-    label: "Data"
+  - name: "videos"
+    label: "Videos（影片清單）"
+    editor:
+      preview: false
+
+    # 這種是「編輯單一 JSON 檔」的模式
     files:
-      - file: "data/videos.json"
-        label: "Videos"
-        name: "videos"
+      - name: "videos_json"
+        label: "影片資料（videos.json）"
+        file: "data/videos.json"
         fields:
           - label: "Videos"
-            name: "videos"
+            name: "items"
             widget: "list"
             summary: "{{fields.title}}"
+            allow_add: true
             fields:
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "URL", name: "url", widget: "string" }
-              - { label: "Thumb", name: "thumb", widget: "string", required: false }
-              - { label: "Tag", name: "tag", widget: "string", required: false }
-              - { label: "Hot (0-100)", name: "hot", widget: "number", required: false, value_type: "int", min: 0, max: 100 }
-              - { label: "Date (YYYY-MM-DD)", name: "date", widget: "string", required: false }
+              - { label: "Title（標題）", name: "title", widget: "string" }
+              - { label: "URL（影片連結）", name: "url", widget: "string" }
+              - { label: "Thumbnail（縮圖網址，可空）", name: "thumb", widget: "string", required: false }
+              - { label: "Tag（標籤，可空）", name: "tag", widget: "string", required: false }
+              - { label: "Hot（熱度 1~100，可空）", name: "hot", widget: "number", required: false, value_type: "int", min: 1, max: 100 }
+              - { label: "Date（日期 YYYY-MM-DD，可空）", name: "date", widget: "datetime", required: false, format: "YYYY-MM-DD", time_format: false }
+
