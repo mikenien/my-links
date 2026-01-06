@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Picks</title>
+
+  <!-- ✅ Link Preview（Linktree 抓縮圖靠這個） -->
+  <meta property="og:title" content="My Picks: Animals + Fitness" />
+  <meta property="og:description" content="Watch my best clips — Animals 🐾 + Fitness 💪" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://YOUR_DOMAIN_OR_GITHUB_PAGES_URL/cover.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://YOUR_DOMAIN_OR_GITHUB_PAGES_URL/cover.jpg" />
+
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; background: #0b0c10; color: #f2f4f8; }
+    a { color: inherit; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 18px; }
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(11,12,16,.85); backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .topbar .wrap { display:flex; gap:12px; align-items:center; justify-content:space-between; }
+    .brand { display:flex; flex-direction:column; gap:2px; }
+    .brand h1 { margin:0; font-size: 16px; letter-spacing: .2px; }
+    .brand p { margin:0; font-size: 12px; opacity: .75; }
+
+    .controls { display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
+    .seg {
+      display:flex; border:1px solid rgba(255,255,255,.12);
+      border-radius: 999px; overflow:hidden;
+    }
+    .seg button{
+      border:0; background:transparent; color:#f2f4f8;
+      padding:8px 12px; cursor:pointer; font-weight:600; font-size:13px;
+      opacity:.8;
+    }
+    .seg button.active{ background: rgba(125, 92, 255, .25); opacity:1; }
+
+    input, select {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      color:#f2f4f8; border-radius: 12px;
+      padding: 10px 12px; font-size: 13px;
+      outline: none;
+    }
+    input::placeholder { color: rgba(242,244,248,.55); }
+    .stats { margin: 14px 0 10px; font-size: 12px; opacity: .8; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+    .grid {
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    @media (min-width: 860px){
+      .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .brand h1 { font-size: 18px; }
+    }
+    .card{
+      display:block;
+      text-decoration:none;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      overflow:hidden;
+      transition: transform .12s ease, border-color .12s ease;
+    }
+    .card:hover{ transform: translateY(-2px); border-color: rgba(125,92,255,.55); }
+    .thumb{
+      width:100%;
+      aspect-ratio: 9 / 16;
+      background: rgba(255,255,255,.06);
+      display:block;
+      object-fit: cover;
+    }
+    .meta { padding: 10px 10px 12px; }
+    .title { font-size: 13px; font-weight: 700; line-height: 1.25; margin: 0 0 8px; }
+    .row { display:flex; gap:8px; align-items:center; justify-content:space-between; }
+    .pill{
+      font-size: 11px; padding: 4px 8px; border-radius: 999px;
+      background: rgba(255,255,255,.10);
+      white-space: nowrap;
+    }
+    .pill.cat { background: rgba(125,92,255,.24); }
+    .pill.tag { opacity: .9; }
+    .small { font-size: 11px; opacity: .78; }
+
+    .footer { margin: 18px 0 6px; font-size: 12px; opacity: .7; text-align:center; }
+    .btnline { display:flex; gap:8px; margin-top:10px; }
+    .btn{
+      flex:1;
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:9px 10px; border-radius: 12px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      font-size: 12px; font-weight: 700;
+      text-decoration:none;
+    }
+    .btn.primary{
+      background: rgba(125,92,255,.24);
+      border-color: rgba(125,92,255,.45);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="wrap">
+      <div class="brand">
+        <h1>My Picks</h1>
+        <p>Animals 🐾 + Fitness 💪 (best clips)</p>
+      </div>
+
+      <div class="controls">
+        <div class="seg" role="tablist" aria-label="category">
+          <button id="tab-all" class="active" data-cat="all">All</button>
+          <button id="tab-animals" data-cat="animals">Animals</button>
+          <button id="tab-fitness" data-cat="fitness">Fitness</button>
+        </div>
+
+        <input id="q" type="search" placeholder="Search title / tag..." />
+        <select id="tag">
+          <option value="all">All tags</option>
+        </select>
+        <select id="sort">
+          <option value="new">Sort: New</option>
+          <option value="hot">Sort: Hot</option>
+          <option value="az">Sort: A → Z</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="stats">
+      <div id="count">0 videos</div>
+      <div class="small">Tip: Pin this page in your bio. Put only 2–3 entries in Linktree.</div>
+    </div>
+
+    <div id="grid" class="grid"></div>
+
+    <div class="footer">
+      © <span id="yy"></span> • Built for IG bio traffic • No bots / no auto-refresh
+    </div>
+  </div>
+
+  <script>
+    // ✅ 你只要改這裡：把你的影片資料貼進 ITEMS
+    // fields:
+    // - cat: "animals" | "fitness"
+    // - title: string
+    // - url: Vinovo 播放頁連結
+    // - thumb: 縮圖（建議 9:16 圖，或留空就用預設）
+    // - tag: 例如 rescue / funny / workout / vlog
+    // - hot: 熱度分數（自己給 1~100，用來排序）
+    // - date: "2026-01-06"（用來排序 new）
+    const DEFAULT_THUMB = "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=900&q=60";
+
+    const ITEMS = [
+      {
+        cat:"animals",
+        title:"Leopard Gives Cub to Person (Short)",
+        url:"https://vinovo.to/d/dd1qqee7c2p6vq",
+        thumb:"",
+        tag:"rescue",
+        hot:85,
+        date:"2026-01-06"
+      },
+      {
+        cat:"animals",
+        title:"Amazing weapons of animals",
+        url:"https://vinovo.to/d/xxxxxxxxxxxxxxx",
+        thumb:"",
+        tag:"wildlife",
+        hot:70,
+        date:"2026-01-05"
+      },
+      {
+        cat:"fitness",
+        title:"Quick Home Workout (No Equipment)",
+        url:"https://vinovo.to/d/yyyyyyyyyyyyyyy",
+        thumb:"",
+        tag:"workout",
+        hot:92,
+        date:"2026-01-06"
+      },
+      {
+        cat:"fitness",
+        title:"Daily Vlog: Gym + Meal Prep",
+        url:"https://vinovo.to/d/zzzzzzzzzzzzzzz",
+        thumb:"",
+        tag:"vlog",
+        hot:60,
+        date:"2026-01-04"
+      }
+    ];
+
+    // UI state
+    let state = { cat: "all", q: "", tag: "all", sort: "new" };
+
+    const $ = (id) => document.getElementById(id);
+    const grid = $("grid"), count = $("count"), q = $("q"), tag = $("tag"), sort = $("sort");
+    const tabs = [ $("tab-all"), $("tab-animals"), $("tab-fitness") ];
+
+    // init tags dropdown
+    const tags = Array.from(new Set(ITEMS.map(x => x.tag).filter(Boolean))).sort((a,b)=>a.localeCompare(b));
+    for (const t of tags){
+      const opt = document.createElement("option");
+      opt.value = t; opt.textContent = t;
+      tag.appendChild(opt);
+    }
+
+    function setActiveTab(cat){
+      state.cat = cat;
+      for (const b of tabs){
+        b.classList.toggle("active", b.dataset.cat === cat);
+      }
+      render();
+    }
+
+    tabs.forEach(b => b.addEventListener("click", () => setActiveTab(b.dataset.cat)));
+    q.addEventListener("input", (e) => { state.q = e.target.value.trim().toLowerCase(); render(); });
+    tag.addEventListener("change", (e) => { state.tag = e.target.value; render(); });
+    sort.addEventListener("change", (e) => { state.sort = e.target.value; render(); });
+
+    function applyFilter(list){
+      return list.filter(x => {
+        if (state.cat !== "all" && x.cat !== state.cat) return false;
+        if (state.tag !== "all" && x.tag !== state.tag) return false;
+        if (state.q){
+          const hay = `${x.title} ${x.tag || ""}`.toLowerCase();
+          if (!hay.includes(state.q)) return false;
+        }
+        return true;
+      });
+    }
+
+    function applySort(list){
+      const copy = [...list];
+      if (state.sort === "hot") copy.sort((a,b)=>(b.hot||0)-(a.hot||0));
+      else if (state.sort === "az") copy.sort((a,b)=>(a.title||"").localeCompare(b.title||""));
+      else copy.sort((a,b)=> String(b.date||"").localeCompare(String(a.date||""))); // new
+      return copy;
+    }
+
+    function cardHTML(x){
+      const thumb = x.thumb && x.thumb.length ? x.thumb : DEFAULT_THUMB;
+      const catLabel = x.cat === "animals" ? "Animals" : "Fitness";
+      const tagText = x.tag ? x.tag : "untagged";
+      return `
+        <div class="card">
+          <a href="${x.url}" target="_blank" rel="noopener nofollow">
+            <img class="thumb" loading="lazy" src="${thumb}" alt="">
+          </a>
+          <div class="meta">
+            <p class="title">${escapeHtml(x.title || "")}</p>
+            <div class="row">
+              <span class="pill cat">${catLabel}</span>
+              <span class="pill tag">${escapeHtml(tagText)}</span>
+            </div>
+            <div class="btnline">
+              <a class="btn primary" href="${x.url}" target="_blank" rel="noopener nofollow">Watch</a>
+              <a class="btn" href="${x.url}" target="_blank" rel="noopener nofollow">Open</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function escapeHtml(s){
+      return (s+"").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+
+    function render(){
+      const filtered = applySort(applyFilter(ITEMS));
+      count.textContent = `${filtered.length} videos`;
+      grid.innerHTML = filtered.map(cardHTML).join("");
+    }
+
+    $("yy").textContent = new Date().getFullYear();
+    render();
+  </script>
+</body>
+</html>
