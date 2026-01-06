@@ -3,106 +3,155 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>My Picks</title>
+  <title>SusanLifeShare • My Picks</title>
 
-  <!-- ✅ Link Preview（Linktree 抓縮圖靠這個） -->
-  <meta property="og:title" content="My Picks: Animals + Fitness" />
-  <meta property="og:description" content="Watch my best clips — Animals 🐾 + Fitness 💪" />
+  <!-- ✅ Link Preview -->
+  <meta property="og:title" content="SusanLifeShare • My Picks" />
+  <meta property="og:description" content="Watch my best clips ✨" />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://mikenien.github.io/SusanLifeShare/cover.jpg" />
+  <meta property="og:image" content="https://susanlifeshare.pages.dev/cover.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://mikenien.github.io/SusanLifeShare/cover.jpg" />
+  <meta name="twitter:image" content="https://susanlifeshare.pages.dev/cover.jpg" />
 
   <style>
     :root { color-scheme: dark; }
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial; background: #0b0c10; color: #f2f4f8; }
+    body { margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial; background:#0b0c10; color:#f2f4f8; }
     a { color: inherit; }
-    .wrap { max-width: 1100px; margin: 0 auto; padding: 18px; }
-    .topbar {
-      position: sticky; top: 0; z-index: 50;
-      background: rgba(11,12,16,.85); backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,.08);
-    }
-    .topbar .wrap { display:flex; gap:12px; align-items:center; justify-content:space-between; }
-    .brand { display:flex; flex-direction:column; gap:2px; }
-    .brand h1 { margin:0; font-size: 16px; letter-spacing: .2px; }
-    .brand p { margin:0; font-size: 12px; opacity: .75; }
+    .topbar{ position:sticky; top:0; z-index:50; background:rgba(11,12,16,.85); backdrop-filter:blur(10px); border-bottom:1px solid rgba(255,255,255,.08); }
+    .wrap{ max-width:1100px; margin:0 auto; padding:18px; }
+    .topbar .wrap{ display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap; }
+    .brand{ display:flex; flex-direction:column; gap:2px; min-width:190px; }
+    .brand h1{ margin:0; font-size:16px; letter-spacing:.2px; font-weight:900; }
+    .brand p{ margin:0; font-size:12px; opacity:.75; }
 
-    .controls { display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
-    .seg {
-      display:flex; border:1px solid rgba(255,255,255,.12);
-      border-radius: 999px; overflow:hidden;
+    .controls{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
+    input, select, textarea{
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.10);
+      color:#f2f4f8;
+      border-radius:12px;
+      padding:10px 12px;
+      font-size:13px;
+      outline:none;
     }
+    input::placeholder{ color:rgba(242,244,248,.55); }
+    textarea{ width:100%; min-height:140px; resize:vertical; font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace; font-size:12px; }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:9px 12px; border-radius:12px;
+      border:1px solid rgba(255,255,255,.12);
+      background:rgba(255,255,255,.06);
+      font-size:12px; font-weight:900;
+      text-decoration:none;
+      cursor:pointer; user-select:none; white-space:nowrap;
+    }
+    .btn.primary{ background:rgba(125,92,255,.24); border-color:rgba(125,92,255,.45); }
+    .btn.danger{ background:rgba(255,92,92,.18); border-color:rgba(255,92,92,.35); }
+    .btn.ghost{ background:transparent; border-color:rgba(255,255,255,.14); }
+
+    /* Category tabs */
+    .seg{
+      display:none;
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:999px;
+      overflow:hidden;
+    }
+    .seg.show{ display:flex; }
     .seg button{
       border:0; background:transparent; color:#f2f4f8;
-      padding:8px 12px; cursor:pointer; font-weight:600; font-size:13px;
-      opacity:.8;
+      padding:8px 12px; cursor:pointer;
+      font-weight:900; font-size:13px; opacity:.8;
     }
-    .seg button.active{ background: rgba(125, 92, 255, .25); opacity:1; }
+    .seg button.active{ background:rgba(125,92,255,.25); opacity:1; }
 
-    input, select {
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-      color:#f2f4f8; border-radius: 12px;
-      padding: 10px 12px; font-size: 13px;
-      outline: none;
+    .stats{
+      margin:14px 0 10px;
+      font-size:12px;
+      opacity:.82;
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center;
     }
-    input::placeholder { color: rgba(242,244,248,.55); }
-    .stats { margin: 14px 0 10px; font-size: 12px; opacity: .8; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; }
-    .grid {
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
+    .small{ font-size:12px; opacity:.78; }
+    .muted{ opacity:.7; }
+
+    .grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    @media (min-width:860px){
+      .grid{ grid-template-columns:repeat(4,minmax(0,1fr)); }
+      .brand h1{ font-size:18px; }
     }
-    @media (min-width: 860px){
-      .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-      .brand h1 { font-size: 18px; }
-    }
+
     .card{
-      display:block;
-      text-decoration:none;
+      display:block; text-decoration:none;
       border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      border-radius: 16px;
-      overflow:hidden;
-      transition: transform .12s ease, border-color .12s ease;
+      background:rgba(255,255,255,.04);
+      border-radius:16px; overflow:hidden;
+      transition:transform .12s ease, border-color .12s ease;
     }
-    .card:hover{ transform: translateY(-2px); border-color: rgba(125,92,255,.55); }
-    .thumb{
-      width:100%;
-      aspect-ratio: 9 / 16;
-      background: rgba(255,255,255,.06);
-      display:block;
-      object-fit: cover;
-    }
-    .meta { padding: 10px 10px 12px; }
-    .title { font-size: 13px; font-weight: 700; line-height: 1.25; margin: 0 0 8px; }
-    .row { display:flex; gap:8px; align-items:center; justify-content:space-between; }
+    .card:hover{ transform:translateY(-2px); border-color:rgba(125,92,255,.55); }
+    .thumb{ width:100%; aspect-ratio:9/16; background:rgba(255,255,255,.06); display:block; object-fit:cover; }
+    .meta{ padding:10px 10px 12px; }
+    .title{ font-size:13px; font-weight:950; line-height:1.25; margin:0 0 8px; }
+    .row{ display:flex; gap:8px; align-items:center; justify-content:space-between; }
     .pill{
-      font-size: 11px; padding: 4px 8px; border-radius: 999px;
-      background: rgba(255,255,255,.10);
-      white-space: nowrap;
+      font-size:11px; padding:4px 8px; border-radius:999px;
+      background:rgba(255,255,255,.10);
+      white-space:nowrap; max-width:60%;
+      overflow:hidden; text-overflow:ellipsis;
     }
-    .pill.cat { background: rgba(125,92,255,.24); }
-    .pill.tag { opacity: .9; }
-    .small { font-size: 11px; opacity: .78; }
+    .pill.cat{ background:rgba(125,92,255,.24); }
+    .pill.tag{ opacity:.9; }
+    .btnline{ display:flex; gap:8px; margin-top:10px; }
+    .btnline .btn{ flex:1; }
 
-    .footer { margin: 18px 0 6px; font-size: 12px; opacity: .7; text-align:center; }
-    .btnline { display:flex; gap:8px; margin-top:10px; }
-    .btn{
-      flex:1;
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:9px 10px; border-radius: 12px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      font-size: 12px; font-weight: 700;
-      text-decoration:none;
+    /* Admin panel */
+    .admin{
+      margin-top:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background:rgba(255,255,255,.03);
+      border-radius:16px;
+      overflow:hidden;
+      display:none;
     }
-    .btn.primary{
-      background: rgba(125,92,255,.24);
-      border-color: rgba(125,92,255,.45);
+    .admin.show{ display:block; }
+    .admin-head{
+      padding:12px 14px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.02);
     }
+    .admin-head h2{ margin:0; font-size:14px; font-weight:950; }
+    .admin-body{ padding:14px; }
+
+    .admin-grid{ display:grid; grid-template-columns:1fr; gap:14px; }
+    @media (min-width:860px){
+      .admin-grid{ grid-template-columns:1.15fr .85fr; }
+    }
+    .panel{ border:1px solid rgba(255,255,255,.10); background:rgba(255,255,255,.03); border-radius:14px; overflow:hidden; }
+    .panel .ph{
+      padding:10px 12px;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    }
+    .panel .ph strong{ font-size:13px; font-weight:950; }
+    .panel .pc{ padding:12px; }
+
+    table{ width:100%; border-collapse:collapse; font-size:12px; }
+    th, td{ border-bottom:1px solid rgba(255,255,255,.08); padding:8px 6px; vertical-align:top; }
+    th{ text-align:left; opacity:.9; }
+    tr:hover td{ background:rgba(255,255,255,.02); }
+
+    .inline{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+    .t-actions{ display:flex; gap:8px; flex-wrap:wrap; margin:10px 0; }
+    .hr{ height:1px; background:rgba(255,255,255,.08); margin:12px 0; }
+    .hint{ font-size:12px; opacity:.78; line-height:1.55; }
+    .kbd{
+      font-family: ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+      font-size:11px; padding:2px 6px; border-radius:8px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+    }
+    .footer{ margin:18px 0 6px; font-size:12px; opacity:.7; text-align:center; }
   </style>
 </head>
 
@@ -110,178 +159,529 @@
   <div class="topbar">
     <div class="wrap">
       <div class="brand">
-        <h1>My Picks</h1>
-        <p>Animals 🐾 + Fitness 💪 (best clips)</p>
+        <h1>SusanLifeShare • My Picks</h1>
+        <p class="muted">Best clips ✨</p>
       </div>
 
       <div class="controls">
-        <div class="seg" role="tablist" aria-label="category">
-          <button id="tab-all" class="active" data-cat="all">All</button>
-          <button id="tab-animals" data-cat="animals">Animals</button>
-          <button id="tab-fitness" data-cat="fitness">Fitness</button>
-        </div>
-
+        <div id="catWrap" class="seg" role="tablist" aria-label="category"></div>
         <input id="q" type="search" placeholder="Search title / tag..." />
-        <select id="tag">
-          <option value="all">All tags</option>
-        </select>
+        <select id="tag"><option value="all">All tags</option></select>
         <select id="sort">
           <option value="new">Sort: New</option>
           <option value="hot">Sort: Hot</option>
           <option value="az">Sort: A → Z</option>
         </select>
+
+        <!-- ✅ 首頁顯示登入後台 -->
+        <button id="loginBtn" class="btn ghost">Login Admin</button>
+        <button id="logoutBtn" class="btn ghost" style="display:none;">Logout</button>
       </div>
     </div>
   </div>
 
   <div class="wrap">
     <div class="stats">
-      <div id="count">0 videos</div>
-      <div class="small">Tip: Pin this page in your bio. Put only 2–3 entries in Linktree.</div>
+      <div id="count">Loading…</div>
+      <div class="small muted">批量管理：請先 Login Admin</div>
     </div>
 
     <div id="grid" class="grid"></div>
 
-    <div class="footer">
-      © <span id="yy"></span> • Built for IG bio traffic • No bots / no auto-refresh
-    </div>
-  </div>
+    <!-- ✅ Admin Panel (after login) -->
+    <div id="admin" class="admin">
+      <div class="admin-head">
+        <h2>Admin • 分類 / 影片（支援批量移動與刪除）</h2>
+        <div class="inline">
+          <button class="btn primary" id="saveLocal">Save (Local)</button>
+          <button class="btn" id="resetLocal">Reset to JSON</button>
+        </div>
+      </div>
 
-  <script>
-    // ✅ 你只要改這裡：把你的影片資料貼進 ITEMS
-    // fields:
-    // - cat: "animals" | "fitness"
-    // - title: string
-    // - url: Vinovo 播放頁連結
-    // - thumb: 縮圖（建議 9:16 圖，或留空就用預設）
-    // - tag: 例如 rescue / funny / workout / vlog
-    // - hot: 熱度分數（自己給 1~100，用來排序）
-    // - date: "2026-01-06"（用來排序 new）
-    const DEFAULT_THUMB = "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=900&q=60";
-
-    const ITEMS = [
-      {
-        cat:"animals",
-        title:"Leopard Gives Cub to Person (Short)",
-        url:"https://vinovo.to/e/dd1qqee7c2p6vq",
-        thumb:"",
-        tag:"rescue",
-        hot:85,
-        date:"2026-01-06"
-      },
-      {
-        cat:"animals",
-        title:"Amazing weapons of animals",
-        url:"https://vinovo.to/e/xxxxxxxxxxxxxxx",
-        thumb:"",
-        tag:"wildlife",
-        hot:70,
-        date:"2026-01-05"
-      },
-      {
-        cat:"fitness",
-        title:"Quick Home Workout (No Equipment)",
-        url:"https://vinovo.to/e/yyyyyyyyyyyyyyy",
-        thumb:"",
-        tag:"workout",
-        hot:92,
-        date:"2026-01-06"
-      },
-      {
-        cat:"fitness",
-        title:"Daily Vlog: Gym + Meal Prep",
-        url:"https://vinovo.to/e/zzzzzzzzzzzzzzz",
-        thumb:"",
-        tag:"vlog",
-        hot:60,
-        date:"2026-01-04"
-      }
-    ];
-
-    // UI state
-    let state = { cat: "all", q: "", tag: "all", sort: "new" };
-
-    const $ = (id) => document.getElementById(id);
-    const grid = $("grid"), count = $("count"), q = $("q"), tag = $("tag"), sort = $("sort");
-    const tabs = [ $("tab-all"), $("tab-animals"), $("tab-fitness") ];
-
-    // init tags dropdown
-    const tags = Array.from(new Set(ITEMS.map(x => x.tag).filter(Boolean))).sort((a,b)=>a.localeCompare(b));
-    for (const t of tags){
-      const opt = document.createElement("option");
-      opt.value = t; opt.textContent = t;
-      tag.appendChild(opt);
-    }
-
-    function setActiveTab(cat){
-      state.cat = cat;
-      for (const b of tabs){
-        b.classList.toggle("active", b.dataset.cat === cat);
-      }
-      render();
-    }
-
-    tabs.forEach(b => b.addEventListener("click", () => setActiveTab(b.dataset.cat)));
-    q.addEventListener("input", (e) => { state.q = e.target.value.trim().toLowerCase(); render(); });
-    tag.addEventListener("change", (e) => { state.tag = e.target.value; render(); });
-    sort.addEventListener("change", (e) => { state.sort = e.target.value; render(); });
-
-    function applyFilter(list){
-      return list.filter(x => {
-        if (state.cat !== "all" && x.cat !== state.cat) return false;
-        if (state.tag !== "all" && x.tag !== state.tag) return false;
-        if (state.q){
-          const hay = `${x.title} ${x.tag || ""}`.toLowerCase();
-          if (!hay.includes(state.q)) return false;
-        }
-        return true;
-      });
-    }
-
-    function applySort(list){
-      const copy = [...list];
-      if (state.sort === "hot") copy.sort((a,b)=>(b.hot||0)-(a.hot||0));
-      else if (state.sort === "az") copy.sort((a,b)=>(a.title||"").localeCompare(b.title||""));
-      else copy.sort((a,b)=> String(b.date||"").localeCompare(String(a.date||""))); // new
-      return copy;
-    }
-
-    function cardHTML(x){
-      const thumb = x.thumb && x.thumb.length ? x.thumb : DEFAULT_THUMB;
-      const catLabel = x.cat === "animals" ? "Animals" : "Fitness";
-      const tagText = x.tag ? x.tag : "untagged";
-      return `
-        <div class="card">
-          <a href="${x.url}" target="_blank" rel="noopener nofollow">
-            <img class="thumb" loading="lazy" src="${thumb}" alt="">
-          </a>
-          <div class="meta">
-            <p class="title">${escapeHtml(x.title || "")}</p>
-            <div class="row">
-              <span class="pill cat">${catLabel}</span>
-              <span class="pill tag">${escapeHtml(tagText)}</span>
+      <div class="admin-body">
+        <div class="admin-grid">
+          <!-- Videos -->
+          <div class="panel">
+            <div class="ph">
+              <strong>影片管理（新增 / 編輯 / 刪除 / 批量）</strong>
+              <div class="inline">
+                <button class="btn" id="addVideo">+ Add</button>
+                <button class="btn" id="editVideo">Edit (single)</button>
+                <button class="btn danger" id="delVideo">Delete (single)</button>
+              </div>
             </div>
-            <div class="btnline">
-              <a class="btn primary" href="${x.url}" target="_blank" rel="noopener nofollow">Watch</a>
-              <a class="btn" href="${x.url}" target="_blank" rel="noopener nofollow">Open</a>
+
+            <div class="pc">
+              <div class="t-actions">
+                <select id="bulkCat"></select>
+                <button class="btn" id="bulkMove">Bulk Move Category</button>
+                <button class="btn danger" id="bulkDelete">Bulk Delete</button>
+              </div>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th style="width:34px;"><input type="checkbox" id="chkAll"></th>
+                    <th>Title / URL</th>
+                    <th style="width:130px;">Category</th>
+                    <th style="width:110px;">Tag</th>
+                    <th style="width:70px;">Hot</th>
+                    <th style="width:110px;">Date</th>
+                  </tr>
+                </thead>
+                <tbody id="videoTbody"></tbody>
+              </table>
+
+              <div class="hr"></div>
+
+              <div class="hint">
+                ✅ 這是靜態 Admin：先存你瀏覽器。要同步給所有人：用下面 Export JSON，貼回 repo 的
+                <span class="kbd">data/videos.json</span> 覆蓋後 Commit。
+              </div>
+            </div>
+          </div>
+
+          <!-- Categories + Import/Export -->
+          <div class="panel">
+            <div class="ph">
+              <strong>分類管理（新增 / 改名 / 刪除）</strong>
+              <div class="inline">
+                <button class="btn" id="addCat">+ Category</button>
+                <button class="btn" id="renameCat">Rename</button>
+                <button class="btn danger" id="deleteCat">Delete</button>
+              </div>
+            </div>
+
+            <div class="pc">
+              <div class="inline">
+                <select id="catPick"></select>
+                <span class="hint">刪除分類會把該分類的影片改成 (no category)</span>
+              </div>
+
+              <div class="hr"></div>
+
+              <div class="inline">
+                <button class="btn" id="exportJson">Export JSON</button>
+                <button class="btn" id="importJson">Import JSON</button>
+              </div>
+
+              <div style="margin-top:10px;">
+                <textarea id="jsonBox" placeholder="Export 會出現在這裡；Import 時把 JSON 貼這裡再按 Import"></textarea>
+              </div>
+
+              <div class="hint" style="margin-top:10px;">
+                JSON 格式：<span class="kbd">{ "items": [ ... ] }</span><br>
+                欄位：title, url, thumb, cat, tag, hot, date
+              </div>
             </div>
           </div>
         </div>
-      `;
-    }
+      </div>
+    </div>
 
-    function escapeHtml(s){
-      return (s+"").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-    }
+    <div class="footer">© <span id="yy"></span> • susanlifeshare.pages.dev</div>
+  </div>
 
-    function render(){
-      const filtered = applySort(applyFilter(ITEMS));
-      count.textContent = `${filtered.length} videos`;
-      grid.innerHTML = filtered.map(cardHTML).join("");
-    }
+<script>
+/** ========= CONFIG ========= **/
+const DEFAULT_THUMB = "./cover.jpg";  // 沒縮圖時使用
+const DATA_URL = "./data/videos.json"; // repo 檔案
 
-    $("yy").textContent = new Date().getFullYear();
-    render();
-  </script>
+// Admin 簡單密碼（你可以改）
+const ADMIN_PASSWORD = "1234";
+
+/** ========= STATE ========= **/
+let DB = { items: [] };
+let state = { cat: "All", q: "", tag: "all", sort: "new" };
+const LS_ITEMS = "SLS_ITEMS_V1";
+const LS_ADMIN = "SLS_ADMIN_LOGGED_IN";
+
+/** ========= DOM ========= **/
+const $ = (id) => document.getElementById(id);
+const grid = $("grid"), count = $("count"), q = $("q"), tagSel = $("tag"), sortSel = $("sort");
+const catWrap = $("catWrap");
+const loginBtn = $("loginBtn"), logoutBtn = $("logoutBtn");
+const adminBox = $("admin");
+
+// admin
+const videoTbody = $("videoTbody");
+const chkAll = $("chkAll");
+const bulkCat = $("bulkCat");
+const catPick = $("catPick");
+const jsonBox = $("jsonBox");
+
+/** ========= UTILS ========= **/
+function escapeHtml(s){ return (s+"").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+function uid(){ return "id_" + Math.random().toString(36).slice(2) + Date.now().toString(36); }
+function normalize(list){
+  return (list||[])
+    .map(x => ({
+      id: x.id || uid(),
+      title: (x.title||"").trim(),
+      url: (x.url||"").trim(),
+      thumb: (x.thumb||"").trim(),
+      cat: (x.cat||"").trim(),   // 可空 = 不分類
+      tag: (x.tag||"").trim(),
+      hot: Number.isFinite(+x.hot) ? +x.hot : 0,
+      date: (x.date||"").trim()
+    }))
+    .filter(x => x.title && x.url);
+}
+
+/** ========= LOAD DATA ========= **/
+async function loadFromRepo(){
+  try{
+    const res = await fetch(DATA_URL, { cache: "no-store" });
+    if(!res.ok) throw new Error("HTTP "+res.status);
+    const data = await res.json();
+    const list = Array.isArray(data) ? data : (Array.isArray(data.items) ? data.items : []);
+    return normalize(list);
+  }catch(e){
+    return [];
+  }
+}
+function loadFromLocal(){
+  try{
+    const raw = localStorage.getItem(LS_ITEMS);
+    if(!raw) return null;
+    return normalize(JSON.parse(raw));
+  }catch(e){
+    return null;
+  }
+}
+function saveLocal(){
+  localStorage.setItem(LS_ITEMS, JSON.stringify(DB.items));
+}
+function resetLocal(){
+  localStorage.removeItem(LS_ITEMS);
+}
+
+/** ========= CATEGORY UI (auto-hide if no category) ========= **/
+function hasAnyCategory(){
+  return DB.items.some(x => (x.cat||"").trim().length > 0);
+}
+function getCategories(){
+  const used = Array.from(new Set(DB.items.map(x => (x.cat||"").trim()).filter(Boolean))).sort((a,b)=>a.localeCompare(b));
+  return used;
+}
+function rebuildCatTabs(){
+  catWrap.innerHTML = "";
+  if(!hasAnyCategory()){
+    catWrap.classList.remove("show");
+    state.cat = "All";
+    return;
+  }
+  catWrap.classList.add("show");
+
+  const cats = ["All", ...getCategories()];
+  if(!cats.includes(state.cat)) state.cat = "All";
+
+  cats.forEach(c => {
+    const b = document.createElement("button");
+    b.textContent = c;
+    b.dataset.cat = c;
+    b.className = (c === state.cat) ? "active" : "";
+    b.onclick = () => {
+      state.cat = c;
+      Array.from(catWrap.querySelectorAll("button")).forEach(x => x.classList.toggle("active", x.dataset.cat === c));
+      render();
+    };
+    catWrap.appendChild(b);
+  });
+}
+
+/** ========= TAG UI ========= **/
+function rebuildTags(){
+  tagSel.innerHTML = `<option value="all">All tags</option>`;
+  const tags = Array.from(new Set(DB.items.map(x => x.tag).filter(Boolean))).sort((a,b)=>a.localeCompare(b));
+  for(const t of tags){
+    const opt = document.createElement("option");
+    opt.value = t; opt.textContent = t;
+    tagSel.appendChild(opt);
+  }
+  if (![...tagSel.options].some(o => o.value === state.tag)){
+    state.tag = "all";
+  }
+  tagSel.value = state.tag;
+}
+
+/** ========= FILTER/SORT ========= **/
+function applyFilter(list){
+  return list.filter(x => {
+    if(hasAnyCategory() && state.cat !== "All" && (x.cat||"") !== state.cat) return false;
+    if(state.tag !== "all" && x.tag !== state.tag) return false;
+    if(state.q){
+      const hay = `${x.title} ${x.tag||""} ${x.cat||""}`.toLowerCase();
+      if(!hay.includes(state.q)) return false;
+    }
+    return true;
+  });
+}
+function applySort(list){
+  const copy = [...list];
+  if(state.sort === "hot") copy.sort((a,b)=>(b.hot||0)-(a.hot||0));
+  else if(state.sort === "az") copy.sort((a,b)=>(a.title||"").localeCompare(b.title||""));
+  else copy.sort((a,b)=> String(b.date||"").localeCompare(String(a.date||""))); // new
+  return copy;
+}
+
+/** ========= RENDER FRONT ========= **/
+function cardHTML(x){
+  const thumb = x.thumb && x.thumb.length ? x.thumb : DEFAULT_THUMB;
+  const catText = (x.cat||"").trim();
+  const tagText = x.tag ? x.tag : "untagged";
+  const leftPill = catText ? `<span class="pill cat">${escapeHtml(catText)}</span>` : `<span class="pill cat">Video</span>`;
+  return `
+    <div class="card">
+      <a href="${escapeHtml(x.url)}" target="_blank" rel="noopener nofollow">
+        <img class="thumb" loading="lazy" src="${escapeHtml(thumb)}" alt="">
+      </a>
+      <div class="meta">
+        <p class="title">${escapeHtml(x.title||"")}</p>
+        <div class="row">
+          ${leftPill}
+          <span class="pill tag">${escapeHtml(tagText)}</span>
+        </div>
+        <div class="btnline">
+          <a class="btn primary" href="${escapeHtml(x.url)}" target="_blank" rel="noopener nofollow">Watch</a>
+          <a class="btn" href="${escapeHtml(x.url)}" target="_blank" rel="noopener nofollow">Open</a>
+        </div>
+      </div>
+    </div>
+  `;
+}
+function render(){
+  rebuildCatTabs();
+  rebuildTags();
+  const filtered = applySort(applyFilter(DB.items));
+  count.textContent = `${filtered.length} videos`;
+  grid.innerHTML = filtered.map(cardHTML).join("");
+  if (isAdmin()) renderAdmin();
+}
+
+/** ========= ADMIN AUTH ========= **/
+function isAdmin(){
+  return localStorage.getItem(LS_ADMIN) === "1";
+}
+function setAdmin(on){
+  localStorage.setItem(LS_ADMIN, on ? "1" : "0");
+  adminBox.classList.toggle("show", on);
+  loginBtn.style.display = on ? "none" : "inline-flex";
+  logoutBtn.style.display = on ? "inline-flex" : "none";
+  if (on) renderAdmin();
+}
+loginBtn.onclick = () => {
+  const pw = prompt("Admin password:");
+  if(pw === null) return;
+  if(pw === ADMIN_PASSWORD){
+    setAdmin(true);
+  }else{
+    alert("Wrong password.");
+  }
+};
+logoutBtn.onclick = () => setAdmin(false);
+
+/** ========= ADMIN RENDER ========= **/
+function selectedIds(){
+  return Array.from(document.querySelectorAll('input[data-vid="1"]:checked')).map(x => x.value);
+}
+function ensureAdminSelects(){
+  // bulk category dropdown
+  const cats = getCategories();
+  bulkCat.innerHTML = `<option value="">(No category)</option>` + cats.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+
+  // category management pick (only actual cats)
+  catPick.innerHTML = cats.length
+    ? cats.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("")
+    : `<option value="" disabled>(No categories)</option>`;
+}
+function renderAdmin(){
+  if(!isAdmin()) return;
+  ensureAdminSelects();
+
+  // table rows
+  const rows = DB.items
+    .slice()
+    .sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")))
+    .map(v => `
+      <tr>
+        <td><input data-vid="1" type="checkbox" value="${escapeHtml(v.id)}"></td>
+        <td>
+          <div style="font-weight:950; margin-bottom:4px;">${escapeHtml(v.title)}</div>
+          <div class="muted" style="word-break:break-all;">${escapeHtml(v.url)}</div>
+        </td>
+        <td>${escapeHtml(v.cat || "(none)")}</td>
+        <td>${escapeHtml(v.tag || "")}</td>
+        <td>${escapeHtml(String(v.hot||0))}</td>
+        <td>${escapeHtml(v.date || "")}</td>
+      </tr>
+    `).join("");
+
+  videoTbody.innerHTML = rows;
+
+  chkAll.checked = false;
+  chkAll.onchange = () => {
+    const on = chkAll.checked;
+    document.querySelectorAll('input[data-vid="1"]').forEach(x => x.checked = on);
+  };
+
+  jsonBox.value = JSON.stringify({ items: DB.items }, null, 2);
+}
+
+/** ========= ADMIN: VIDEO CRUD ========= **/
+function promptVideo(initial){
+  const v = initial || { id: uid(), title:"", url:"", thumb:"", cat:"", tag:"", hot:0, date: new Date().toISOString().slice(0,10) };
+
+  const title = prompt("Title", v.title); if(title===null) return null;
+  const url = prompt("URL", v.url); if(url===null) return null;
+  const thumb = prompt("Thumb URL (optional)", v.thumb); if(thumb===null) return null;
+  const cat = prompt("Category (optional, blank = no category)", v.cat); if(cat===null) return null;
+  const tag = prompt("Tag (optional)", v.tag); if(tag===null) return null;
+  const hot = prompt("Hot (0-100)", String(v.hot ?? 0)); if(hot===null) return null;
+  const date = prompt("Date (YYYY-MM-DD)", v.date || ""); if(date===null) return null;
+
+  return {
+    id: v.id,
+    title: (title||"").trim(),
+    url: (url||"").trim(),
+    thumb: (thumb||"").trim(),
+    cat: (cat||"").trim(),
+    tag: (tag||"").trim(),
+    hot: Number.isFinite(+hot) ? +hot : 0,
+    date: (date||"").trim()
+  };
+}
+
+$("addVideo").onclick = () => {
+  const nv = promptVideo(null);
+  if(!nv) return;
+  if(!nv.title || !nv.url){ alert("Title/URL required"); return; }
+  DB.items.unshift(nv);
+  saveLocal();
+  render();
+};
+
+$("editVideo").onclick = () => {
+  const ids = selectedIds();
+  if(ids.length !== 1){ alert("請勾選 1 支影片再 Edit"); return; }
+  const cur = DB.items.find(x => x.id === ids[0]);
+  if(!cur) return;
+  const nv = promptVideo(cur);
+  if(!nv) return;
+  Object.assign(cur, nv);
+  saveLocal();
+  render();
+};
+
+$("delVideo").onclick = () => {
+  const ids = selectedIds();
+  if(ids.length !== 1){ alert("請勾選 1 支影片再 Delete"); return; }
+  if(!confirm("Delete this video?")) return;
+  DB.items = DB.items.filter(x => x.id !== ids[0]);
+  saveLocal();
+  render();
+};
+
+/** ========= ADMIN: BULK ========= **/
+$("bulkMove").onclick = () => {
+  const ids = selectedIds();
+  if(ids.length === 0){ alert("請先勾選影片"); return; }
+  const to = bulkCat.value; // "" means no category
+  DB.items.forEach(x => { if(ids.includes(x.id)) x.cat = to; });
+  saveLocal();
+  render();
+};
+
+$("bulkDelete").onclick = () => {
+  const ids = selectedIds();
+  if(ids.length === 0){ alert("請先勾選影片"); return; }
+  if(!confirm(`Bulk delete ${ids.length} videos?`)) return;
+  DB.items = DB.items.filter(x => !ids.includes(x.id));
+  saveLocal();
+  render();
+};
+
+/** ========= ADMIN: CATEGORY CRUD ========= **/
+$("addCat").onclick = () => {
+  const name = prompt("New category name:"); if(name===null) return;
+  const c = (name||"").trim();
+  if(!c){ alert("Empty"); return; }
+  // just add by assigning to none videos? categories derived from items, so create by making no-op item? we keep as list in items via usage
+  alert("分類會在有影片使用它時出現。\n你可以現在用 Bulk Move 把影片移過去，分類就會顯示。");
+};
+
+$("renameCat").onclick = () => {
+  const old = catPick.value;
+  if(!old){ alert("No categories"); return; }
+  const nn = prompt("Rename category to:", old);
+  if(nn===null) return;
+  const neu = (nn||"").trim();
+  if(!neu){ alert("Empty"); return; }
+  DB.items.forEach(x => { if(x.cat === old) x.cat = neu; });
+  saveLocal();
+  render();
+};
+
+$("deleteCat").onclick = () => {
+  const c = catPick.value;
+  if(!c){ alert("No categories"); return; }
+  if(!confirm(`Delete category "${c}"?\n影片會變成 (no category)`)) return;
+  DB.items.forEach(x => { if(x.cat === c) x.cat = ""; });
+  saveLocal();
+  render();
+};
+
+/** ========= ADMIN: IMPORT / EXPORT ========= **/
+$("exportJson").onclick = () => {
+  jsonBox.value = JSON.stringify({ items: DB.items }, null, 2);
+  jsonBox.focus();
+  jsonBox.select();
+};
+
+$("importJson").onclick = () => {
+  const txt = jsonBox.value.trim();
+  if(!txt){ alert("請貼上 JSON"); return; }
+  let obj;
+  try{ obj = JSON.parse(txt); }catch(e){ alert("JSON 格式錯誤"); return; }
+  const list = Array.isArray(obj) ? obj : (Array.isArray(obj.items) ? obj.items : null);
+  if(!list){ alert("需要 { items: [...] }"); return; }
+  DB.items = normalize(list);
+  saveLocal();
+  render();
+};
+
+$("saveLocal").onclick = () => { saveLocal(); alert("Saved to this browser."); };
+$("resetLocal").onclick = async () => {
+  if(!confirm("Reset local data back to repo JSON?")) return;
+  resetLocal();
+  const repoItems = await loadFromRepo();
+  DB.items = repoItems;
+  saveLocal();
+  render();
+};
+
+/** ========= EVENTS ========= **/
+q.oninput = (e) => { state.q = e.target.value.trim().toLowerCase(); render(); };
+tagSel.onchange = (e) => { state.tag = e.target.value; render(); };
+sortSel.onchange = (e) => { state.sort = e.target.value; render(); };
+
+/** ========= INIT ========= **/
+(async function init(){
+  $("yy").textContent = new Date().getFullYear();
+
+  // load repo JSON then override with local if exists
+  const repoItems = await loadFromRepo();
+  const localItems = loadFromLocal();
+  DB.items = localItems && localItems.length ? localItems : repoItems;
+
+  // if both empty, seed an example
+  if(!DB.items.length){
+    DB.items = normalize([{ title:"Example Video", url:"https://example.com", thumb:"", cat:"", tag:"demo", hot:10, date:new Date().toISOString().slice(0,10) }]);
+  }
+
+  render();
+  setAdmin(isAdmin());
+})();
+</script>
 </body>
 </html>
